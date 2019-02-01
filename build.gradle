@@ -11,7 +11,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.github.warlordofmars:gradle-release-helper:release-0.1.0'
+        classpath 'com.github.warlordofmars:gradle-release-helper:release-0.1.1'
     }
 }
 
@@ -26,12 +26,3 @@ dependencies {
 group = 'com.github.warlordofmars'
 
 githubRelease.releaseAssets jar.archivePath
-
-task('deploy') {
-    mustRunAfter build
-    if(System.env.containsKey('PROMOTE')) {
-        dependsOn tasks['githubRelease']
-    }
-}
-
-tasks['githubRelease'].mustRunAfter build
