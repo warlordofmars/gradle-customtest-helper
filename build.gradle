@@ -1,9 +1,13 @@
 buildscript {
     repositories {
-        
+        mavenLocal()
+        mavenCentral()
+        jcenter()
     }
     dependencies {
-        
+        classpath "com.squareup.okhttp3:okhttp:3.8.1"
+        classpath "org.zeroturnaround:zt-exec:1.10"
+        classpath "com.j256.simplemagic:simplemagic:1.10"
     }
 }
 
