@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        
+    }
+    dependencies {
+        
+    }
+}
+
+plugins {
+    id 'pl.allegro.tech.build.axion-release' version '1.10.0'
+    id "com.github.breadmoirai.github-release" version "2.2.3"
+}
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    compile gradleApi()
+}
+
+group = 'com.github.warlordofmars'
+version = scmVersion.version
+
+
+if(hasProperty('github.token')) {
+
+    scmVersion {
+        repository {
+            customUsername = getProperty('github.token')
+        }
+    }
+
+    githubRelease {
+        token getProperty('github.token')
+        tagName "release-${rootProject.version}"
+        releaseName "v${rootProject.version}"
+        overwrite true
+        releaseAssets jar.archivePath
+    }
+
+    task('deploy') {
+        mustRunAfter build
+        if(System.env.containsKey('PROMOTE')) {
+            dependsOn tasks['githubRelease']
+        }
+    }
+
+    tasks['githubRelease'].mustRunAfter build
+}
