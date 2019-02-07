@@ -3,7 +3,7 @@ package com.github.warlordofmars.gradle.customtest
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-
+import org.gradle.api.tasks.Delete
 
 import groovy.xml.MarkupBuilder
 import groovy.util.XmlSlurper
@@ -16,6 +16,12 @@ import com.github.warlordofmars.gradle.customtest.model.Test
 class CustomTestPlugin implements Plugin<Project> {
 
     void apply(Project project) {
+
+        if(!project.tasks.findByName('clean')) {
+            project.task('clean', type:Delete) {
+                delete project.buildDir
+            }
+        }
 
         project.task('registerTests') {
             doFirst {
