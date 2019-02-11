@@ -24,6 +24,8 @@ class CustomTestPlugin implements Plugin<Project> {
         }
 
         project.task('registerTests') {
+            description 'Register all configure tests'
+            group 'Test'
             doFirst {
 
                 project.rootProject.ext.getTestCounts = {
